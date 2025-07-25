@@ -3,62 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Press Buttons and Mpesa Payment</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .press-button {
-            background-color: #4CAF50;
-            color:"https://files.catbox.moe/o1ys3q.jpg;"
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 10px;
-        }
-        .press-button:hover {
-            background-color: #3e8e41;
-        }
-        .contact-section {
-            margin-top: 50px;
-        }
-    </style>
+    <title>Draughts Game</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Press Buttons</h1>
-    <button class="press-button">bot development</button>
-    <button class="press-button">bot deploy 2</button>
-    <button class="press-button">saf data 3</button>
-    <button class="press-button">web development 4</button>
-    <button class="press-button">coding time 5</button>
-    <button class="press-button">development teach 6</button>
-    <button class="press-button">deployment teach7</button>
-    <button class="press-button">Press Button 8</button>
-    <button class="press-button">sir bravin 9</0717263689>
-    <button class="press-button">Press Button 10</button>
-    <button class="press-button">Press Button 11</button>
-
-    <div class="contact-section">
-        <h2>Contact Us</h2> 0717263689
-        <p>If you'd like to get in touch or make a payment via Mpesa, please use the details below:</p>
-        <form>
-            <label for="phone-number">Mpesa Phone Number:</label>
-            <input type="tel" id="phone-number" name="phone-number"><br><br>
-            <label for="amount">Amount:</label>
-            <input type="number" id="amount" name="amount"><br><br>
-            <button class="press-button">Pay with Mpesa</button>
-        </form>
-    </div>
-
-    <script>
-                                                   
-        const pressButtons = document.getElementsByClassName('press-button');
-        for (let i = 0; i < pressButtons.length; i++) {
-            pressButtons[i].addEventListener('click', function() {
-                alert('Button ' + (i + 1) + ' pressed!');
-            });
-        }
-    </script>
+    <h1>Draughts Game</h1>
+    <div class="game-board"></div>
+    <script src="script.js"></script>
 </body>
 </html>
+
+CSS (in styles.css file):
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: 400px;
+    height: 400px;
+    border: 1px solid black;
+}
+
+.square {
+    width: 100%;
+    height: 100%;
+    background-color: #eee;
+    border: 1px solid black;
+}
+
+.square.dark {
+    background-color: #666;
+}
+
+.piece {
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    background-color: #fff;
+    margin: 10%;
+}
+
+.piece.black {
+    background-color: #000;
+}
+
+.piece.king {
+    border: 2px solid gold;
+}
+
+JavaScript (in script.js file):
+// Initialize the game board
+const gameBoard = document.querySelector('.game-board');
+let squares = [];
+for (let i = 0; i < 64; i++) {
+    const square = document.createElement('div');
+    square.classList.add('square');
+    if ((i / 8 | 0 + i % 8) % 2 === 1) {
+        square.classList.add('dark');
+    }
+    gameBoard.appendChild(square);
+    squares.push(square);
+}
+
+// Initialize pieces
+let pieces = [];
+for (let i = 0; i < 12; i++) {
+    const piece = document.createElement('div');
+    piece.classList.add('piece');
+    piece.classList.add('black');
+    squares[i * 2].appendChild(piece);
+    pieces.push(piece);
+}
+
+for (let i = 0; i < 12; i++) {
+    const piece = document.createElement('div');
+    piece.classList.add('piece');
+    squares[63 - i * 2].appendChild(piece);
+    pieces.push(piece);
+}
+
+// Add event listeners for piece movement
+let selectedPiece = null;
+squares.forEach((square) => {
+    square.addEventListener('click', () => {
+        if (selectedPiece) {
+            // Move the piece to the selected square
+            selectedPiece.parentNode.removeChild(selectedPiece);
+            square.appendChild(selectedPiece);
+            selectedPiece = null;
+        } else {
+            // Select a piece
+            const piece = square.querySelector('.piece');
+            if (piece) {
+                selectedPiece = piece;
+            }
+        }
+    });
+});
+
