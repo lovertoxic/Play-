@@ -1,56 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>sir bravin Car Game</title>
+  <title>Chatroom</title>
   <style>
-    canvas {
-      border: 1px solid black;
+    #chat-log {
+      padding: 10px;
+      border: 1px solid #ccc;
+      height: 300px;
+      overflow-y: scroll;
+    }
+    #chat-input {
+      padding: 10px;
+      width: 80%;
+    }
+    #send-btn {
+      padding: 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <canvas id="canvas" width="400" height="400"></canvas>
+  <h1>Chatroom</h1>
+  <div id="chat-log"></div>
+  <input type="text" id="chat-input" placeholder="Type a message...">
+  <button id="send-btn">Send</button>
+
   <script>
-    let canvas = document.getElementById("canvas");
-    let ctx = canvas.getContext("2d");
-    let car = { x: 200, y: 200, speed: 5 };
-    let road = { x: 150, y: 0, width: 100, height: 400 };
+    let chatLog = document.getElementById("chat-log");
+    let chatInput = document.getElementById("chat-input");
+    let sendBtn = document.getElementById("send-btn");
 
-    function drawRoad() {
-      ctx.fillStyle = "gray";
-      ctx.fillRect(road.x, road.y, road.width, road.height);
-    }
-
-    function drawCar() {
-      ctx.fillStyle = "red";
-      ctx.fillRect(car.x, car.y, 20, 20);
-    }
-
-    function update() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawRoad();
-      drawCar();
-    }
-
-    document.addEventListener("keydown", (e) => {
-      switch (e.key) {
-        case "ArrowUp":
-          car.y -= car.speed;
-          break;
-        case "ArrowDown":
-          car.y += car.speed;
-          break;
-        case "ArrowLeft":
-          car.x -= car.speed;
-          break;
-        case "ArrowRight":
-          car.x += car.speed;
-          break;
+    sendBtn.addEventListener("click", () => {
+      let message = chatInput.value;
+      if (message !== "") {
+        let chatMessage = document.createElement("div");
+        chatMessage.innerText = message;
+        chatLog.appendChild(chatMessage);
+        chatInput.value = "";
+        chatLog.scrollTop = chatLog.scrollHeight;
       }
-      update();
     });
 
-    update();
+    chatInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        sendBtn.click();
+      }
+    });
   </script>
 </body>
 </html>
