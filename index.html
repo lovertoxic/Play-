@@ -1,81 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Chatbot</title>
-  <style>
-    #chat-log {
-      padding: 10px;
-      border: 1px solid #ccc;
-      height: 300px;
-      overflow-y: scroll;
-    }
-    #chat-input {
-      padding: 10px;
-      width: 80%;
-    }
-    #send-btn {
-      padding: 10px;
-      background-color: #4CAF50;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Press Buttons and Mpesa Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .press-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .press-button:hover {
+            background-color: #3e8e41;
+        }
+        .contact-section {
+            margin-top: 50px;
+        }
+    </style>
 </head>
 <body>
-  <h1>Chatbot</h1>
-  <div id="chat-log"></div>
-  <input type="text" id="chat-input" placeholder="Type a message...">
-  <button id="send-btn">Send</button>
+    <h1>Press Buttons</h1>
+    <button class="press-button">Press Button 1</button>
+    <button class="press-button">Press Button 2</button>
+    <button class="press-button">Press Button 3</button>
+    <button class="press-button">Press Button 4</button>
+    <button class="press-button">Press Button 5</button>
+    <button class="press-button">Press Button 6</button>
+    <button class="press-button">Press Button 7</button>
+    <button class="press-button">Press Button 8</button>
+    <button class="press-button">Press Button 9</button>
+    <button class="press-button">Press Button 10</button>
+    <button class="press-button">Press Button 11</button>
 
-  <script>
-    const apiKey = "curl https://api.openai.com/v1/responses \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer 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" \
-  -d '{
-    "model": "gpt-4o-mini",
-    "input": "write a haiku about ai",
-    "store": true
-  }'";
-    const chatLog = document.getElementById("chat-log");
-    const chatInput = document.getElementById("chat-input");
-    const sendBtn = document.getElementById("send-btn");
+    <div class="contact-section">
+        <h2>Contact Us</h2>
+        <p>If you'd like to get in touch or make a payment via Mpesa, please use the details below:</p>
+        <form>
+            <label for="phone-number">Mpesa Phone Number:</label>
+            <input type="tel" id="phone-number" name="phone-number"><br><br>
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount"><br><br>
+            <button class="press-button">Pay with Mpesa</button>
+        </form>
+    </div>
 
-    sendBtn.addEventListener("click", async () => {
-      const message = chatInput.value;
-      if (message !== "") {
-        const chatMessage = document.createElement("div");
-        chatMessage.innerText = `You: ${message}`;
-        chatLog.appendChild(chatMessage);
-
-        const response = await fetch("https:                                        
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${apiKey}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            "model": "gpt-3.5-turbo",
-            "messages": [{ "role": "user", "content": message }]
-          })
-        });
-
-        const data = await response.json();
-        const botResponse = data.choices[0].message.content;
-        const botMessage = document.createElement("div");
-        botMessage.innerText = `Bot: ${botResponse}`;
-        chatLog.appendChild(botMessage);
-
-        chatInput.value = "";
-        chatLog.scrollTop = chatLog.scrollHeight;
-      }
-    });
-
-    chatInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        sendBtn.click();
-      }
-    });
-  </script>
+    <script>
+                                                   
+        const pressButtons = document.getElementsByClassName('press-button');
+        for (let i = 0; i < pressButtons.length; i++) {
+            pressButtons[i].addEventListener('click', function() {
+                alert('Button ' + (i + 1) + ' pressed!');
+            });
+        }
+    </script>
 </body>
 </html>
