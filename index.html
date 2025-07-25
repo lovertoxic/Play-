@@ -29,7 +29,14 @@
   <button id="send-btn">Send</button>
 
   <script>
-    const apiKey = "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";
+    const apiKey = "curl https://api.openai.com/v1/responses \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer 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" \
+  -d '{
+    "model": "gpt-4o-mini",
+    "input": "write a haiku about ai",
+    "store": true
+  }'";
     const chatLog = document.getElementById("chat-log");
     const chatInput = document.getElementById("chat-input");
     const sendBtn = document.getElementById("send-btn");
