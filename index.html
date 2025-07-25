@@ -3,100 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Draughts Game</title>
+    <title>Temple Run</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Draughts Game</h1>
-    <div class="game-board"></div>
+    <canvas id="game-canvas" width="400" height="600"></canvas>
     <script src="script.js"></script>
 </body>
 </html>
-
-CSS (in styles.css file):
-.game-board {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(8, 1fr);
-    width: 400px;
-    height: 400px;
-    border: 1px solid black;
-}
-
-.square {
-    width: 100%;
-    height: 100%;
-    background-color: #eee;
-    border: 1px solid black;
-}
-
-.square.dark {
-    background-color: #666;
-}
-
-.piece {
-    width: 80%;
-    height: 80%;
-    border-radius: 50%;
-    background-color: #fff;
-    margin: 10%;
-}
-
-.piece.black {
-    background-color: #000;
-}
-
-.piece.king {
-    border: 2px solid gold;
-}
-
-JavaScript (in script.js file):
-// Initialize the game board
-const gameBoard = document.querySelector('.game-board');
-let squares = [];
-for (let i = 0; i < 64; i++) {
-    const square = document.createElement('div');
-    square.classList.add('square');
-    if ((i / 8 | 0 + i % 8) % 2 === 1) {
-        square.classList.add('dark');
-    }
-    gameBoard.appendChild(square);
-    squares.push(square);
-}
-
-// Initialize pieces
-let pieces = [];
-for (let i = 0; i < 12; i++) {
-    const piece = document.createElement('div');
-    piece.classList.add('piece');
-    piece.classList.add('black');
-    squares[i * 2].appendChild(piece);
-    pieces.push(piece);
-}
-
-for (let i = 0; i < 12; i++) {
-    const piece = document.createElement('div');
-    piece.classList.add('piece');
-    squares[63 - i * 2].appendChild(piece);
-    pieces.push(piece);
-}
-
-// Add event listeners for piece movement
-let selectedPiece = null;
-squares.forEach((square) => {
-    square.addEventListener('click', () => {
-        if (selectedPiece) {
-            // Move the piece to the selected square
-            selectedPiece.parentNode.removeChild(selectedPiece);
-            square.appendChild(selectedPiece);
-            selectedPiece = null;
-        } else {
-            // Select a piece
-            const piece = square.querySelector('.piece');
-            if (piece) {
-                selectedPiece = piece;
-            }
-        }
-    });
-});
-
